@@ -26,7 +26,7 @@ export default function Home () {
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={selectedTab} onChange={handleChange} aria-label="basic tabs example">
+            <Tabs  value={selectedTab} onChange={handleChange} >
                 <Tab label="ROI" {...a11yProps(0)} />
                 <Tab label="Stacked Deck Spot" {...a11yProps(1)} />
                 <Tab label="TBD" {...a11yProps(2)} />
