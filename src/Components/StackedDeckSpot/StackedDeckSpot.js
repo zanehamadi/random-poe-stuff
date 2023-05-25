@@ -10,6 +10,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 export default function StackedDeckSpot(){
     const spots = ['Izaro','Mine', 'Tane', 'Beast' ]
     const [selectedSpot, setSelectedSpot] = React.useState('')
+    const [display, setDisplay] = React.useState('')
     const [counter, setCounter] = React.useState(0)
 
     const randomNumberRoll = () => {
@@ -21,8 +22,12 @@ export default function StackedDeckSpot(){
             setSelectedSpot(spots[randomNumber]) 
         }
         
-        
     }
+    const randomHideRoll = () => {
+        let randomNumber = Math.floor(Math.random() * 2);
+        randomNumber ? setDisplay('hide') : setDisplay('show')
+    }
+
     return (
         <div className='stacked-deck-drop-container'>
             <Box className="stacked-deck-text-container stack-deck-text" >
@@ -33,33 +38,60 @@ export default function StackedDeckSpot(){
                     This is extremely useless, I just can't make decisions. 
                 </Typography>
             </Box>
-            <Stack style={{marginTop: '2vh'}}> 
-                {
-                    selectedSpot ? 
-                    <>
-                        <Stack direction="row" className="stack-deck-text">
-                            <Typography id={selectedSpot} variant="h4">
-                                {selectedSpot.toUpperCase()}
-                            </Typography>
-                            {counter > 0 && 
-                                    <Tooltip placement='right' title={`You have hit "${selectedSpot}" ${counter} time${counter > 1 ? 's' : ''}`}>
-                                        <InfoOutlinedIcon fontSize='1px'/>
-                                    </Tooltip>
-                            }
+            <Stack direction="row" spacing={5}>
+                <Stack style={{marginTop: '2vh'}}> 
+                    {
+                        selectedSpot ? 
+                        <>
+                            <Stack direction="row" className="stack-deck-text">
+                                <Typography id={selectedSpot} variant="h4">
+                                    {selectedSpot.toUpperCase()}
+                                </Typography>
+                                {counter > 0 && 
+                                        <Tooltip placement='right' title={`You have hit ${selectedSpot} ${counter + 1} times`}>
+                                            <InfoOutlinedIcon fontSize='1px'/>
+                                        </Tooltip>
+                                }
 
-                        </Stack>
-                        <Button onClick={() => randomNumberRoll()} variant="outlined">
-                            Roll Again
-                        </Button>
-                    
-                    </>
-                    :
+                            </Stack>
+                            <Button onClick={() => randomNumberRoll()} variant="outlined">
+                                Roll Again
+                            </Button>
+                        
+                        </>
+                        :
 
-                        <Button onClick={() => randomNumberRoll()} variant="outlined">
-                            Roll
-                        </Button>
+                            <Button onClick={() => randomNumberRoll()} variant="outlined">
+                                Roll Spot
+                            </Button>
 
-                }
+                    }
+
+                </Stack>
+                <Stack style={{marginTop: '2vh'}}> 
+                    {
+                        display ? 
+                        <>
+                            <Stack direction="row" className="stack-deck-text">
+                                <Typography variant="h4">
+                                    {display.toUpperCase()}
+                                </Typography>
+
+                            </Stack>
+                            <Button onClick={() => randomHideRoll()} variant="outlined">
+                                Roll Again
+                            </Button>
+                        
+                        </>
+                        :
+
+                            <Button onClick={() => randomHideRoll()} variant="outlined">
+                                Roll
+                            </Button>
+
+                    }
+
+                </Stack>
 
             </Stack>
         </div>
