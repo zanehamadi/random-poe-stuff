@@ -63,8 +63,8 @@ export default function ROICalculator() {
     const [submit, setSubmit] = React.useState(false);
     const [showRestart, setShowRestart] = React.useState(false)
     // Validations:
-    const [validations, setValidations ] = React.useState(false)
-    
+    const [errorValidation, setErrorValidation ] = React.useState(false)
+    const [warningValidation, setWarningValidation] = React.useState(false)
     // Modal stuff:
     const [open, setOpen] = React.useState(false);
 
@@ -87,18 +87,23 @@ export default function ROICalculator() {
         setAvgHitRateSelected(false)
         setSubmit(false)
         setShowRestart(false)
+        setErrorValidation(false)
+        setWarningValidation(false)
     }
     
     const poeRoiCalc = () => {
         let validChecker = false;
-        if(avgReturn === NaN) setAvgReturn(0)
-        if(hitVal === NaN) setHitVal(0)
-        
-        if(!attemptCost || attemptCost === 0) validChecker = true
-        if(!hitVal || hitVal === 0) validChecker = true
-        if(avgReturn > attemptCost ) validChecker = true
-        if(hitVal < attemptCost) validChecker = true
-        if(avgReturn > hitVal) validChecker = true
+        if(isNaN(avgReturn)) setAvgReturn(0)
+        if(isNaN(hitVal)) setHitVal(0)
+
+        if((!attemptCost || attemptCost === 0) || (!hitVal || hitVal === 0)){
+            validChecker = true;
+            setErrorValidation(true)
+        }
+        if((hitVal < attemptCost)|| (avgReturn > attemptCost ) || (avgReturn > hitVal) ){
+            validChecker = true;
+            setWarningValidation(true)
+        }
         if(!validChecker){
             let attempts = 0;
             let totalCost = 0;
@@ -119,19 +124,18 @@ export default function ROICalculator() {
             }
             setSubmit(true)
             setShowRestart(true)
+            setErrorValidation(false)
+            setWarningValidation(false)
             handleClickOpen()
             
         }
-        setValidations(validChecker)
         if(validChecker) setSubmit(false)
-
-        
     }
 
     return (
         <>
-        {validations && <Alert severity="error">Please make sure you have entered an attempt cost and a desired return.</Alert>}
-        {validations && <Alert severity="warning"><strong>Note:</strong> The calculator will not let you submit if: 
+        {errorValidation && <Alert onClose={() => {setErrorValidation(false)}} severity="error">Please make sure you have entered an attempt cost and a desired return.</Alert>}
+        {warningValidation && <Alert onClose={() => {setWarningValidation(false)}} severity="warning"><strong>Note:</strong> The calculator will not let you submit if: 
             <ul>
                 <li> Average return is higher than attempt cost</li>
                 <li> Desired return is lower than attempt cost</li>

@@ -1,0 +1,34 @@
+.stacked-deck-drop-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.stacked-deck-drop-container{
+    margin-left: 2vw;
+    margin-top: 3vh;
+}
+
+#Izaro{
+    color: #748500;
+    cursor: default
+}
+#Mine{
+    color: #FFAE42;
+    cursor: default
+}
+#Tane{
+    color: rgb(5, 128, 5);
+    cursor: default
+
+}
+
+#Beast{
+    color: #800000;
+    cursor: default
+}
+
+.stack-deck-text:hover{
+    cursor: default
+}
