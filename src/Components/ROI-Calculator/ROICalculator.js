@@ -132,6 +132,28 @@ export default function ROICalculator() {
         if(validChecker) setSubmit(false)
     }
 
+    React.useEffect(() => {
+        console.log(attemptCost)
+    }, [attemptCost])
+
+    let roiFieldValidator = (val, inputType) => {
+        switch(inputType){
+            case 'attempt':
+                isNaN(parseFloat(val)) ?  setAttemptCost('') : setAttemptCost(parseFloat(val))
+                break;
+            case 'desired':
+                isNaN(parseFloat(val)) ?  setHitVal('') : setHitVal(parseFloat(val))
+                break;
+            case 'average':
+                isNaN(parseFloat(val)) ?  setAvgReturn('') : setAvgReturn(parseFloat(val))
+                break;
+            case 'hit':
+                isNaN(parseFloat(val)) ?  setAvgHit('') : setAvgHit(parseFloat(val))
+                break;
+            default:
+                break;
+        }
+    } 
     return (
         <>
         {errorValidation && <Alert onClose={() => {setErrorValidation(false)}} severity="error">Please make sure you have entered an attempt cost and a desired return.</Alert>}
@@ -159,16 +181,16 @@ export default function ROICalculator() {
             
             <Stack className="roi-stack" spacing={2} direction="row">
                 <Tooltip title="Enter the amount required for each attempt">
-                    <TextField value={attemptCost} type="number" className="roi-text-field"  onChange={e => setAttemptCost(parseFloat(e.target.value))} label="Attempt Cost"></TextField>
+                    <TextField value={attemptCost} InputLabelProps={{shrink: true}} type="number" step=".01" onChange={e => roiFieldValidator(e.target.value, 'attempt')} label="Attempt Cost"></TextField>
                 </Tooltip>
                 <Tooltip title="Enter how much the item will be sold if you hit the desired outcome">
-                    <TextField value={hitVal} type="number" className="roi-text-field"  onChange={e => setHitVal(parseFloat(e.target.value))} label="Desired Return"></TextField>
+                    <TextField value={hitVal} InputLabelProps={{shrink: true}} type="number" step=".01" className="roi-text-field"  onChange={e => roiFieldValidator(e.target.value, 'desired')} label="Desired Return"></TextField>
                 </Tooltip>
                 <Tooltip title="Enter the average return of item sold if you do not hit the desired outcome">
-                    <TextField value={avgReturn} type="number" className="roi-text-field"  onChange={e => setAvgReturn(parseFloat(e.target.value))} label="Average Return"></TextField>
+                    <TextField value={avgReturn} InputLabelProps={{shrink: true}} type="number" step=".01" className="roi-text-field"  onChange={e => roiFieldValidator(e.target.value, 'average') && setAvgReturn(parseFloat(e.target.value)) } label="Average Return"></TextField>
                 </Tooltip>
                 <Tooltip title="Enter the hit chance of desired out come.">
-                    <TextField value={avgHit} type="number" className="roi-text-field"  onChange={e => setAvgHit(parseFloat(e.target.value))} label="Hit Chance"></TextField>
+                    <TextField value={avgHit} InputLabelProps={{shrink: true}} type="number" step=".01" className="roi-text-field"  onChange={e => roiFieldValidator(e.target.value, 'hit')} label="Hit Chance"></TextField>
                 </Tooltip>
                 {!submit ?
                     <Tooltip title="Submit">
