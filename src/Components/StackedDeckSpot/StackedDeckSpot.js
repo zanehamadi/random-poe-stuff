@@ -43,20 +43,20 @@ export default function StackedDeckSpot(){
                     {
                         selectedSpot ? 
                         <>
+                            <Button onClick={() => randomNumberRoll()} variant="outlined">
+                                Roll Again
+                            </Button>
                             <Stack direction="row" className="stack-deck-text">
-                                <Typography id={selectedSpot} variant="h4">
+                                <Typography style={{marginTop: '2vh'}} id={selectedSpot} variant="h4">
                                     {selectedSpot.toUpperCase()}
                                 </Typography>
                                 {counter > 0 && 
                                         <Tooltip placement='right' title={`You have hit ${selectedSpot} ${counter + 1} times`}>
-                                            <InfoOutlinedIcon fontSize='1px'/>
+                                            <InfoOutlinedIcon  style={{marginTop: '2vh'}} fontSize='1px'/>
                                         </Tooltip>
                                 }
 
                             </Stack>
-                            <Button onClick={() => randomNumberRoll()} variant="outlined">
-                                Roll Again
-                            </Button>
                         
                         </>
                         :
@@ -72,15 +72,15 @@ export default function StackedDeckSpot(){
                     {
                         display ? 
                         <>
+                            <Button onClick={() => randomHideRoll()} variant="outlined">
+                                Roll Again
+                            </Button>
                             <Stack direction="row" className="stack-deck-text">
-                                <Typography variant="h4">
+                                <Typography style={{marginTop: '2vh'}}variant="h4">
                                     {display.toUpperCase()}
                                 </Typography>
 
                             </Stack>
-                            <Button onClick={() => randomHideRoll()} variant="outlined">
-                                Roll Again
-                            </Button>
                         
                         </>
                         :

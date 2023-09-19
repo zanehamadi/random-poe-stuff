@@ -89,6 +89,7 @@ export default function ROICalculator() {
         setShowRestart(false)
         setErrorValidation(false)
         setWarningValidation(false)
+        setAvgHit('')
     }
     
     const poeRoiCalc = () => {
